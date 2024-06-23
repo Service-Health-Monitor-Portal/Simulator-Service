@@ -1,0 +1,32 @@
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>/home/mina/services_logs/simulator.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerData>true</includeCallerData>
+            <jsonGeneratorDecorator class="net.logstash.logback.decorate.CompositeJsonGeneratorDecorator">
+                <decorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+                <decorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                    <defaultMask>XXXX</defaultMask>
+                    <path>password</path>
+                </decorator>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerData>true</includeCallerData>
+            <jsonGeneratorDecorator class="net.logstash.logback.decorate.CompositeJsonGeneratorDecorator">
+                <decorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+                <decorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                    <defaultMask>XXXX</defaultMask>
+                    <path>password</path>
+                </decorator>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

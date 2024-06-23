@@ -1,8 +1,7 @@
 package com.service_health_monitor_portal.simulator;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -10,13 +9,13 @@ import org.springframework.stereotype.Component;
 public class Log {
     @Async
     public void generate(Service service) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(service.name() + ".log", true))) {
+        Logger logger = LoggerFactory.getLogger(Log.class);
+        try {
             while (true) {
-                writer.println("{\"success\":" + service.success() + ",\"throttlingError\":" + service.throttlingError() + ",\"dependencyError\":" + service.dependencyError() + ",\"faultError\":" + service.faultError() + ",\"invalidInputError\":" + service.invalidInputError() + "},");
-                writer.flush();
+                logger.atInfo().addKeyValue("service_log", service).log("Service health log");
                 Thread.sleep(5000);
             }
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
