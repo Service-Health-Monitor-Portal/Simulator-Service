@@ -2,9 +2,7 @@ package com.service_health_monitor_portal.simulator;
 
 import java.util.Objects;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 public class Service {
     private static int counter = 0;
