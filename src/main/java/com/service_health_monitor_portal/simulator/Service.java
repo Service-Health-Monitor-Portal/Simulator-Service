@@ -2,6 +2,10 @@ package com.service_health_monitor_portal.simulator;
 
 import java.util.Objects;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 public class Service {
     private static int counter = 0;
     private final int id;
@@ -94,4 +98,16 @@ public class Service {
                 + ", faultError='" + getFaultError() + "'" + ", invalidInputError='" + getInvalidInputError() + "'"
                 + "}";
     }
+
+    public void validate() {
+        if (success + throttlingError + dependencyError + faultError + invalidInputError != 100) {
+            throw new IllegalArgumentException(
+                    "Sum of success, throttlingError, dependencyError, faultError and invalidInputError should be 100");
+        }
+        if (name == null || name.isEmpty() || name.length() > 40) {
+            throw new IllegalArgumentException("Name should not be empty and should be less than 40 characters");
+        }
+
+    }
+    
 }
