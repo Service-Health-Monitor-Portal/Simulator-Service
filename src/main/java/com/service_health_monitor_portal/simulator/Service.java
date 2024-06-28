@@ -31,6 +31,16 @@ public class Service {
         this.id = counter;
     }
 
+    public Service(Service service) {
+        this.id = service.id;
+        this.name = service.name;
+        this.success = 0;
+        this.throttlingError = 0;
+        this.dependencyError = 0;
+        this.faultError = 0;
+        this.invalidInputError = 0;
+    }
+
     public int getId() {
         return id;
     }
