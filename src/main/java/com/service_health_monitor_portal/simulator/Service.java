@@ -110,10 +110,10 @@ public class Service {
     public void validate() {
         if (success + throttlingError + dependencyError + faultError + invalidInputError != 100) {
             throw new IllegalArgumentException(
-                    "Sum of success, throttlingError, dependencyError, faultError and invalidInputError should be 100");
+                    "Sum of all rates should be 100%");
         }
         if (name == null || name.isEmpty() || name.length() > 40) {
-            throw new IllegalArgumentException("Name should not be empty and should be less than 40 characters");
+            throw new IllegalArgumentException("Name should not be empty or greater than 40 characters");
         }
 
     }
