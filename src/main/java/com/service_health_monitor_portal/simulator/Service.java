@@ -1,12 +1,10 @@
 package com.service_health_monitor_portal.simulator;
 
 import java.util.Objects;
-
-
+import java.util.UUID;
 
 public class Service {
-    private static int counter = 0;
-    private final int id;
+    private final UUID id;
     private String name;
     private int success;
     private int throttlingError;
@@ -16,8 +14,7 @@ public class Service {
 
     public Service(String name, int success, int throttlingError, int dependencyError, int faultError,
             int invalidInputError) {
-        counter++;
-        this.id = counter;
+        this.id = UUID.randomUUID();
         this.name = name;
         this.success = success;
         this.throttlingError = throttlingError;
@@ -27,21 +24,10 @@ public class Service {
     }
 
     public Service() {
-        counter++;
-        this.id = counter;
+        this.id = UUID.randomUUID();
     }
 
-    public Service(Service service) {
-        this.id = service.id;
-        this.name = service.name;
-        this.success = 0;
-        this.throttlingError = 0;
-        this.dependencyError = 0;
-        this.faultError = 0;
-        this.invalidInputError = 0;
-    }
-
-    public int getId() {
+    public UUID getId() {
         return id;
     }
     public String getName() {
@@ -89,7 +75,7 @@ public class Service {
             return false;
         }
         Service service = (Service) o;
-        return id == service.id && Objects.equals(name, service.name) && success == service.success
+        return Objects.equals(id, service.id) && Objects.equals(name, service.name) && success == service.success
                 && throttlingError == service.throttlingError && dependencyError == service.dependencyError
                 && faultError == service.faultError && invalidInputError == service.invalidInputError;
     }
@@ -117,5 +103,5 @@ public class Service {
         }
 
     }
-    
+
 }
