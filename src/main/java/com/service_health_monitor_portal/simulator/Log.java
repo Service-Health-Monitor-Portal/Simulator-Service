@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Log {
-    private final int ONE_MINUTE = 1 * 60 * 1000;
+    private final int Time = 6 * 1000;
 
     @Async
     public void generate(Service service) {
@@ -24,7 +24,7 @@ public class Log {
                 String currentState = serviceStates.get(randoms.get(rnd.nextInt(100)));
                 ServiceHealth health = new ServiceHealth(service.getId().toString(), service.getName(), currentState);
                 logger.atInfo().addKeyValue("service_log", health).log("Service health log");
-                Thread.sleep(rnd.nextInt(ONE_MINUTE));
+                Thread.sleep(Time);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
