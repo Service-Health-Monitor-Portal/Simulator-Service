@@ -16,12 +16,9 @@ public class Log {
     @Async
     public void generate(Service service) {
         Logger logger = LoggerFactory.getLogger(Log.class);
-        List<String> serviceStates = List.of("success", "throttlingError", "dependencyError", "faultError", "invalidInputError");
-        List<Integer> randoms = generateRandoms(service);
         try {
             while (true) {
-                Random rnd = new Random();
-                String currentState = serviceStates.get(randoms.get(rnd.nextInt(100)));
+                String currentState = generateLogStatus();
                 ServiceHealth health = new ServiceHealth(service.getId().toString(), service.getName(), currentState);
                 logger.atInfo().addKeyValue("service_log", health).log("Service health log");
                 Thread.sleep(Time);
@@ -31,20 +28,28 @@ public class Log {
         }
     }
 
-    private List<Integer> generateRandoms(Service service) {
-        List<Integer> randoms = new ArrayList<>();
-        addErrorCount(randoms, service.getSuccess(), 0);
-        addErrorCount(randoms, service.getThrottlingError(), 1);
-        addErrorCount(randoms, service.getDependencyError(), 2);
-        addErrorCount(randoms, service.getFaultError(), 3);
-        addErrorCount(randoms, service.getInvalidInputError(), 4);
-        return randoms;
-    }
+    private String generateLogStatus() {
+        Random random = new Random();
+        int successWeight = random.nextInt(31) + 40;
+        int totalWeight = 100;
 
-    private void addErrorCount(List<Integer> randoms, int count, int errorIndex) {
-        for (int i = 0; i < count; i++) {
-            randoms.add(errorIndex);
+        List<String> states = new ArrayList<>();
+
+        for (int i = 0; i < successWeight; i++) {
+            states.add("success");
         }
+
+        for (int i = 0; i < totalWeight - successWeight; i++) {
+            String state = switch (random.nextInt(4)) {
+                case 0 -> "throttlingError";
+                case 1 -> "dependencyError";
+                case 2 -> "faultError";
+                default -> "invalidInputError";
+            };
+            states.add(state);
+        }
+
+        return states.get(random.nextInt(states.size()));
     }
 
     public record ServiceHealth(
