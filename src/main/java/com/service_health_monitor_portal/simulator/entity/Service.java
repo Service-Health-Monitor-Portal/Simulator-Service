@@ -1,4 +1,4 @@
-package com.service_health_monitor_portal.simulator;
+package com.service_health_monitor_portal.simulator.entity;
 
 import lombok.Data;
 

@@ -3,16 +3,18 @@ package com.service_health_monitor_portal.simulator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+
+import com.service_health_monitor_portal.simulator.Services.Log;
+import com.service_health_monitor_portal.simulator.Services.ServiceClient;
+import com.service_health_monitor_portal.simulator.entity.Service;
 
 @SpringBootApplication
 @EnableAsync
-@EnableScheduling
-public class SimulatorApplication {
+public class SimulatorApplication implements CommandLineRunner {
 
     @Autowired
     private ServiceClient serviceClient;
@@ -20,18 +22,23 @@ public class SimulatorApplication {
     @Autowired
     private Log log;
 
-
     public static void main(String[] args) {
-		System.out.println("Starting simulator");
+        System.out.println("Starting simulator");
         SpringApplication.run(SimulatorApplication.class, args);
     }
 
-    @Scheduled(fixedRate = 6000) // Poll every 60 seconds
-    public void pollForNewServices() {
-		System.out.println("Polling for new services");
+    @Override
+    public void run(String... args) {
+        pollForNewServices();
+    }
+
+    private void pollForNewServices() {
+        System.out.println("Polling for new services");
         List<Service> services = serviceClient.fetchAllServices();
         for (Service service : services) {
-			log.generate(service);
+            System.out.println("Service addeddddddddddddddddddddd");
+            System.out.println(service);
+            log.generate(service);
         }
     }
 }

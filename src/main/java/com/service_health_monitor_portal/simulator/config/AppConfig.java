@@ -1,4 +1,4 @@
-package com.service_health_monitor_portal.simulator;
+package com.service_health_monitor_portal.simulator.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

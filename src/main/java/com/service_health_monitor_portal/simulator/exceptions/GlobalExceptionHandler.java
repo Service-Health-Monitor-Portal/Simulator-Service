@@ -1,4 +1,4 @@
-package com.service_health_monitor_portal.simulator;
+package com.service_health_monitor_portal.simulator.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
