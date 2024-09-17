@@ -1,6 +1,4 @@
-package com.service_health_monitor_portal.simulator;
-
-import org.springframework.web.bind.annotation.RestController;
+package com.service_health_monitor_portal.simulator.controllers;
 
 import java.util.Map;
 
@@ -11,17 +9,22 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.service_health_monitor_portal.simulator.Services.Log;
+import com.service_health_monitor_portal.simulator.entity.Service;
 
 @RestController()
-@RequestMapping("/api/v1/services")
+@RequestMapping("/api/services")
 @CrossOrigin(origins = "*")
-public class ServiceController {
+public class AddServicecontroller {
     @Autowired
     private Log log;
 
     @PostMapping()
     public ResponseEntity<Map<String,Object>> createService(@RequestBody Service service) {
-        service.validate();
+        System.out.println("Service added");
+        System.out.println(service);
         log.generate(service);
         String id = service.getId().toString();
         JSONObject res = new JSONObject();
